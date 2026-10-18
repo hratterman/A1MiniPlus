@@ -1,0 +1,4 @@
+# version url
+# Source for 01.04.00.00: hash and timestamp from github.com/lunDreame/user-bambulab-firmware
+# assets/a1_mini_ams.json (commit 455b015), mapped onto the offline URL pattern seen on the Bambu forum.
+01.04.00.00 https://public-cdn.bblmw.com/upgrade/device/offline/N1/01.04.00.00/1496eccbb7/offline-ota-n1_v01.04.00.00-20241210144819.zip

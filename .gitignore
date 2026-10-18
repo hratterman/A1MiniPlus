@@ -1,0 +1,9 @@
+# Bambu firmware binaries and anything derived from them stay local.
+firmware/
+work/
+ghidra/
+secrets/
+*.gpr
+*.rep/
+.DS_Store
+__pycache__/
