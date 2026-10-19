@@ -31,19 +31,32 @@ Nothing sensitive or Bambu-proprietary is committed (see `.gitignore`:
 - `[hypothesis]` 256-byte block = RSA-2048 signature; 32-byte trailer = SHA-256;
   `sig` field in `ota-n1.json` = MD5 of the decrypted image.
 
+## Update (Phase 2 start, 01.08.00.00 added)
+
+- `[confirmed]` Henry supplied the 01.08.00.00 `.sig` components. Keystream
+  groups are fixed per board family across both releases (details in
+  `notes/phase-2.md`).
+- `[confirmed]` AP image header parses as an ESP32-S3 image (entry
+  0x4037921C). `[hypothesis]` the MC and toolhead are not ESP32 parts; no
+  evidence yet.
+- Phase 2 is paused, see `notes/phase-2.md`.
+
 ## Open questions
 
-1. Does the reused keystream span the full file length, or only the header?
-   (First Phase 2 check, on the toolhead group.)
-2. What is the actual cipher (plain XOR with a fixed/periodic keystream, or a
-   stream cipher keyed per group)? Is the key derivable, or only the keystream?
-3. What does the `ota-n1.json` 32-hex `sig` hash cover?
+1. Is the cipher applied to compressed data? (MC and AP XORs are near-random
+   across versions; toolhead is not.)
+2. What is the cipher, and is the keystream derivable or only recoverable
+   by cribbing?
+3. What does the `sig` field in `ota-n1.json` hash?
+4. What is `mc02.n3`?
 
-## Next open question / next step
+## Next step, needs Henry's call
 
-Phase 2, toolhead keystream group: verify full-length reuse, then crib-drag
-`th_rev3` vs `th_rev7` using ARM image structure to recover plaintext. Blocked
-for Phase 5 (version diffing) until more releases are collected — need Henry to
-supply download links/files for 01.05 .. 01.08 (Cloudflare blocks scripted
-access to the download page from this environment). No hardware steps taken or
-proposed yet.
+Options: (a) continue the reused-keystream analysis on the toolhead group
+(smallest, most overlap between versions); (b) stop Phase 2 and treat the
+firmware as opaque, working only from manifests and diffs of sizes; (c) hardware
+route, which is a stop point and needs your approval.
+
+Housekeeping: the 01.08 `.sig` files you uploaded are tracked in the repo root
+in commit 81c87e8, which breaks the "nothing published" rule if the repo is
+public. I have not removed them.
